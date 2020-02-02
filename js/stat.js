@@ -81,6 +81,6 @@ window.renderStatistics = function (ctx, names, times) {
 
     renderRectangle(ctx, playerBarHorizontal, playerBarVertical, BAR_WIDTH, playerBarHeight, playerBarColor); // рисует гистограмму
     renderText(ctx, playerBarHorizontal, playerNameVertical, names[i], TEXT_COLOR, TEXT_FONT); // выводит имя игрока
-    renderText(ctx, playerBarHorizontal, playerTimeVertical, playerTime, TEXT_COLOR, TEXT_FONT);
-  };
+    renderText(ctx, playerBarHorizontal, playerTimeVertical, playerTime, TEXT_COLOR, TEXT_FONT); // выводит время игрока
+  }
 };
