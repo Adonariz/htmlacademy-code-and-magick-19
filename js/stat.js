@@ -19,7 +19,7 @@ var BAR_WIDTH = 40; // ширина столбца гистограммы
 var BAR_HEIGHT = 140; // высота столбца гистограммы
 var BAR_MARGIN_LEFT = 50; // левый отступ столбцов
 var BAR_COLOR_PLAYER = 'rgba(255, 0, 0, 1)'; // цвет столбца игрока
-var BAR_VERTICAL_MODIFIER = 30;
+var BAR_VERTICAL_MODIFIER = 30; // дополнительный модификатор вертикального смещения столбцов
 
 var textHorizontalPosition = CLOUD_X + TEXT_MARGIN_LEFT; // координаты первой строки текста по горизонтали
 var textVerticalPosition = CLOUD_Y + TEXT_MARGIN_TOP; // координаты первой строки текста по вертикали
