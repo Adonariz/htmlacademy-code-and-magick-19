@@ -58,8 +58,8 @@ var getMaxElement = function (array) {
 
 // вывод статистики
 window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, CLOUD_X + SHADOW_GAP, CLOUD_Y + SHADOW_GAP, SHADOW_COLOR); // облако
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, CLOUD_COLOR); // тень
+  renderCloud(ctx, CLOUD_X + SHADOW_GAP, CLOUD_Y + SHADOW_GAP, SHADOW_COLOR); // тень
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, CLOUD_COLOR); // облако
 
   renderText(ctx, textHorizontalPosition, textVerticalPosition, TEXT_FIRST_LINE, TEXT_COLOR, TEXT_FONT); // первая строка текста
   renderText(ctx, textHorizontalPosition, textVerticalPosition + TEXT_LINE_HEIGHT, TEXT_SECOND_LINE, TEXT_COLOR, TEXT_FONT); // вторая строка текста
@@ -68,7 +68,7 @@ window.renderStatistics = function (ctx, names, times) {
 
   for (var i = 0; i < names.length; i++) {
     var barColor = 'hsl(240, ' + Math.floor(Math.random() * 100) + '%, 50%'; // генератор цвета столбцов гистограммы
-    var playerBarColor = (names[i] === 'Вы') ? BAR_COLOR_PLAYER : barColor;
+    var playerBarColor = (names[i] === 'Вы') ? BAR_COLOR_PLAYER : barColor; // присвоение цвета столбцу
 
     var playerNameVertical = CLOUD_HEIGHT - TEXT_HEIGHT; // расположение имени игрока по вертикали
 
@@ -76,8 +76,8 @@ window.renderStatistics = function (ctx, names, times) {
     var playerBarHeight = (BAR_HEIGHT * times[i]) / maxTime; // рассчет высоты столбца игрока от его времени
     var playerBarVertical = BAR_HEIGHT - playerBarHeight + CLOUD_Y + TEXT_HEIGHT + TEXT_MARGIN_TOP + TEXT_LINE_HEIGHT + BAR_VERTICAL_MODIFIER; // очень длинный рассчет вертикального расположения столбца
 
-    var playerTime = Math.round(times[i]);
-    var playerTimeVertical = playerBarVertical - TEXT_HEIGHT;
+    var playerTime = Math.round(times[i]); // округляем время игрока
+    var playerTimeVertical = playerBarVertical - TEXT_HEIGHT; // расположение времени игрока по вертикали
 
     renderRectangle(ctx, playerBarHorizontal, playerBarVertical, BAR_WIDTH, playerBarHeight, playerBarColor); // рисует гистограмму
     renderText(ctx, playerBarHorizontal, playerNameVertical, names[i], TEXT_COLOR, TEXT_FONT); // выводит имя игрока
