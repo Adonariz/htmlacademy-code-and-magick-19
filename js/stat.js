@@ -21,9 +21,6 @@ var BAR_MARGIN_LEFT = 50; // левый отступ столбцов
 var BAR_COLOR_PLAYER = 'rgba(255, 0, 0, 1)'; // цвет столбца игрока
 var BAR_VERTICAL_MODIFIER = 30; // дополнительный модификатор вертикального смещения столбцов
 
-var textHorizontalPosition = CLOUD_X + TEXT_MARGIN_LEFT; // координаты первой строки текста по горизонтали
-var textVerticalPosition = CLOUD_Y + TEXT_MARGIN_TOP; // координаты первой строки текста по вертикали
-
 // отрисовка столбцов гистограммы
 var renderRectangle = function (ctx, x, y, width, height, color) {
   ctx.fillStyle = color;
@@ -58,6 +55,9 @@ var getMaxElement = function (array) {
 
 // вывод статистики
 window.renderStatistics = function (ctx, names, times) {
+  var textHorizontalPosition = CLOUD_X + TEXT_MARGIN_LEFT; // координаты первой строки текста по горизонтали
+  var textVerticalPosition = CLOUD_Y + TEXT_MARGIN_TOP; // координаты первой строки текста по вертикали
+
   renderCloud(ctx, CLOUD_X + SHADOW_GAP, CLOUD_Y + SHADOW_GAP, SHADOW_COLOR); // тень
   renderCloud(ctx, CLOUD_X, CLOUD_Y, CLOUD_COLOR); // облако
 
