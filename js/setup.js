@@ -42,11 +42,25 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
+var createWizardsArray = function (number) {
+  var wizards = [];
+
+  for (var i = 0; i < number; i++) {
+    wizards.push(getRandomWizard());
+  }
+
+  return wizards;
+};
+
+var generatedWizards = createWizardsArray(NUMBER_OF_WIZARDS);
+
 // создаем фрагмент и добавляем элементы
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
-  fragment.appendChild(renderWizard(getRandomWizard()));
+
+for (var i = 0; i < generatedWizards.length; i++) {
+  fragment.appendChild(renderWizard(generatedWizards[i]));
 }
+
 similarListElement.appendChild(fragment);
 
 // отрисовываем раздел похожие персонажи
