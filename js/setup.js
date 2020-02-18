@@ -31,6 +31,8 @@ var setupFireballWrap = setupPlayer.querySelector('.setup-fireball-wrap');
 var setupFireball = setupFireballWrap.querySelector('.setup-fireball');
 var fireballColorInput = setupFireballWrap.querySelector('input[name=fireball-color]');
 
+var currentArrayIndex = 0;
+
 // шаблон с похожими волшебниками
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
@@ -87,8 +89,18 @@ similarListElement.appendChild(fragment);
 setupWindow.querySelector('.setup-similar').classList.remove('hidden');
 
 // кастомизируем игрока
+var increaseArrayIndex = function (array) {
+  currentArrayIndex++;
+
+  if (currentArrayIndex === array.length) {
+    currentArrayIndex = 0;
+  }
+
+  return currentArrayIndex;
+};
+
 var changeColor = function (array, element, input) {
-  var color = getRandomItem(array);
+  var color = array[increaseArrayIndex(array)];
   element.style.fill = color;
   input.value = color;
 };
@@ -102,7 +114,7 @@ var onCoatClick = function () {
 };
 
 var onFireballClick = function () {
-  var color = getRandomItem(FIREBALL_COLORS);
+  var color = FIREBALL_COLORS[increaseArrayIndex(FIREBALL_COLORS)];
   setupFireballWrap.style.backgroundColor = color;
   fireballColorInput.value = color;
 };
