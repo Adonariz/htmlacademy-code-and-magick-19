@@ -17,6 +17,7 @@ var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var setupWindow = document.querySelector('.setup');
 var setupOpenIcon = document.querySelector('.setup-open-icon');
 var setupCloseButton = setupWindow.querySelector('.setup-close');
+var setupUserName = setupWindow.querySelector('.setup-user-name');
 
 // кастомизация игрока
 var setupPlayer = document.querySelector('.setup-player');
@@ -126,9 +127,19 @@ var onPopupEscPress = function (evt) {
   }
 };
 
+var onUserNameFocus = function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var onUserNameBlur = function () {
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
 var setupOpen = function () {
   setupWindow.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress);
+  setupUserName.addEventListener('focusin', onUserNameFocus);
+  setupUserName.addEventListener('focusout', onUserNameBlur);
   setupEyesColor.addEventListener('click', onEyesClick);
   setupCoatColor.addEventListener('click', onCoatClick);
   setupFireball.addEventListener('click', onFireballClick);
@@ -137,6 +148,8 @@ var setupOpen = function () {
 var setupClose = function () {
   setupWindow.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
+  setupUserName.removeEventListener('focusin', onUserNameFocus);
+  setupUserName.removeEventListener('focusout', onUserNameBlur);
   setupEyesColor.removeEventListener('click', onEyesClick);
   setupCoatColor.removeEventListener('click', onCoatClick);
   setupFireball.removeEventListener('click', onFireballClick);
