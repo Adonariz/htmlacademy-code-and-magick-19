@@ -5,7 +5,7 @@
   var dialogOpenIcon = document.querySelector('.setup-open-icon');
   var dialogCloseButton = dialogWindow.querySelector('.setup-close');
   var userName = dialogWindow.querySelector('.setup-user-name');
-  
+
   // кастомизация игрока
   var player = document.querySelector('.setup-player');
   var wizardAppearance = player.querySelector('.setup-wizard-appearance');
@@ -28,7 +28,7 @@
   var onFireballClick = function () {
     window.utils.changeColor(window.data.FIREBALL_COLORS, fireballWrap, fireballColorInput);
   };
-  
+
   // показываем попап
   var onPopupEscPress = function (evt) {
     if (evt.key === window.utils.ESC_KEY) {

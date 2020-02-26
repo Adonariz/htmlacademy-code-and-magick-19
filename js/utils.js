@@ -4,13 +4,17 @@
   // кнопки для обработчиков
   var ESC_KEY = 'Escape';
   var ENTER_KEY = 'Enter';
-  
+
   // счетчик для перебора массива
   var currentArrayIndex = 0;
 
   var increaseArrayIndex = function (array) {
     currentArrayIndex++;
-    return currentArrayIndex === array.length ? currentArrayIndex = 0 : currentArrayIndex;
+
+    if (currentArrayIndex === array.length) {
+      currentArrayIndex = 0;
+    }
+    return currentArrayIndex;
   };
 
   window.utils = {
@@ -23,9 +27,14 @@
 
     changeColor: function (array, element, input) {
       var color = array[increaseArrayIndex(array)];
-      
-      element.tagName.toLowerCase() === 'div' ? element.style.backgroundColor = color : element.style.fill = color;      
+
+      if (element.tagName.toLowerCase() === 'div') {
+        element.style.backgroundColor = color;
+      } else {
+        element.style.fill = color;
+      }
+
       input.value = color;
     }
-  }
+  };
 })();
