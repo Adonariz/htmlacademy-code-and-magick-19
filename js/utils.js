@@ -10,12 +10,7 @@
 
   var increaseArrayIndex = function (array) {
     currentArrayIndex++;
-  
-    if (currentArrayIndex === array.length) {
-      currentArrayIndex = 0;
-    }
-  
-    return currentArrayIndex;
+    return currentArrayIndex === array.length ? currentArrayIndex = 0 : currentArrayIndex;
   };
 
   window.utils = {
@@ -29,12 +24,7 @@
     changeColor: function (array, element, input) {
       var color = array[increaseArrayIndex(array)];
       
-      if (element.tagName.toLowerCase() === 'div') {
-        element.style.backgroundColor = color;
-      } else {
-        element.style.fill = color;
-      }
-      
+      element.tagName.toLowerCase() === 'div' ? element.style.backgroundColor = color : element.style.fill = color;      
       input.value = color;
     }
   }
