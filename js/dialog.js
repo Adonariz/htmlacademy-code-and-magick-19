@@ -1,86 +1,65 @@
 'use strict';
 
 (function () {
+  var DEFAULT_SETUP_LEFT = '50%';
+  var DEFAULT_SETUP_TOP = '80px';
+
   var dialogWindow = document.querySelector('.setup');
-  var dialogOpenIcon = document.querySelector('.setup-open-icon');
-  var dialogCloseButton = dialogWindow.querySelector('.setup-close');
-  var userName = dialogWindow.querySelector('.setup-user-name');
+  var dialogHandler = dialogWindow.querySelector('.upload');
 
-  // кастомизация игрока
-  var player = document.querySelector('.setup-player');
-  var wizardAppearance = player.querySelector('.setup-wizard-appearance');
-  var coat = wizardAppearance.querySelector('.wizard-coat');
-  var coatColorInput = wizardAppearance.querySelector('input[name=coat-color]');
-  var eyes = wizardAppearance.querySelector('.wizard-eyes');
-  var eyesColorInput = wizardAppearance.querySelector('input[name=eyes-color]');
-  var fireballWrap = player.querySelector('.setup-fireball-wrap');
-  var fireball = fireballWrap.querySelector('.setup-fireball');
-  var fireballColorInput = fireballWrap.querySelector('input[name=fireball-color]');
+  dialogHandler.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
 
-  var onEyesClick = function () {
-    window.utils.changeColor(window.data.EYES_COLORS, eyes, eyesColorInput);
-  };
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
 
-  var onCoatClick = function () {
-    window.utils.changeColor(window.data.COAT_COLORS, coat, coatColorInput);
-  };
+    var dragged = false;
 
-  var onFireballClick = function () {
-    window.utils.changeColor(window.data.FIREBALL_COLORS, fireballWrap, fireballColorInput);
-  };
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      dragged = true;
 
-  // показываем попап
-  var onPopupEscPress = function (evt) {
-    if (evt.key === window.utils.ESC_KEY) {
-      setupClose();
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      dialogWindow.style.top = (dialogWindow.offsetTop - shift.y) + 'px';
+      dialogWindow.style.left = (dialogWindow.offsetLeft - shift.x) + 'px';
+
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+      if (dragged) {
+        var onClickPreventDefault = function (clickEvt) {
+          clickEvt.preventDefault();
+          dialogHandler.removeEventListener('click', onClickPreventDefault);
+        };
+        dialogHandler.addEventListener('click', onClickPreventDefault);
+      }
+
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
+  window.dialog = {
+    resetDialogCoords: function () {
+      dialogWindow.style.left = DEFAULT_SETUP_LEFT;
+      dialogWindow.style.top = DEFAULT_SETUP_TOP;
     }
   };
-
-  var onUserNameFocus = function () {
-    document.removeEventListener('keydown', onPopupEscPress);
-  };
-
-  var onUserNameBlur = function () {
-    document.addEventListener('keydown', onPopupEscPress);
-  };
-
-  var setupOpen = function () {
-    dialogWindow.classList.remove('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
-    userName.addEventListener('focusin', onUserNameFocus);
-    userName.addEventListener('focusout', onUserNameBlur);
-    eyes.addEventListener('click', onEyesClick);
-    coat.addEventListener('click', onCoatClick);
-    fireball.addEventListener('click', onFireballClick);
-  };
-
-  var setupClose = function () {
-    dialogWindow.classList.add('hidden');
-    document.removeEventListener('keydown', onPopupEscPress);
-    userName.removeEventListener('focusin', onUserNameFocus);
-    userName.removeEventListener('focusout', onUserNameBlur);
-    eyes.removeEventListener('click', onEyesClick);
-    coat.removeEventListener('click', onCoatClick);
-    fireball.removeEventListener('click', onFireballClick);
-  };
-
-  dialogOpenIcon.addEventListener('click', function () {
-    setupOpen();
-  });
-
-  dialogOpenIcon.addEventListener('keydown', function (evt) {
-    if (evt.key === window.utils.ENTER_KEY) {
-      setupOpen();
-    }
-  });
-
-  dialogCloseButton.addEventListener('click', function () {
-    setupClose();
-  });
-
-  dialogCloseButton.addEventListener('keydown', function (evt) {
-    if (evt.key === window.utils.ENTER_KEY) {
-      setupClose();
-    }
-  });
 })();
