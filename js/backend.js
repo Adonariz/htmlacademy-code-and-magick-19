@@ -4,7 +4,7 @@
   var LOAD_URL = 'https://js.dump.academy/code-and-magick/data';
   var SEND_URL = 'https://js.dump.academy/code-and-magick/';
   var TIMEOUT_IN_MS = 10000; // 10 сек
-  
+
   // обрабатываем ответ сервера
   var serverStatusHandler = function (xhr, onLoad, onError) {
     xhr.responseType = 'json';
@@ -36,7 +36,7 @@
         default:
           error = 'Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText;
       }
-  
+
       if (error) {
         onError(error);
       }
@@ -48,10 +48,10 @@
       xhr.addEventListener('timeout', function () {
         onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
-        
+
       xhr.timeout = TIMEOUT_IN_MS;
     });
-  }
+  };
 
   window.backend = {
     load: function (onLoad, onError) {
