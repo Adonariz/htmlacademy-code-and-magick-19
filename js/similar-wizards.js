@@ -45,9 +45,10 @@
   var similarWizardsHandler = function (wizards) {
     // создаем фрагмент и добавляем элементы
     var fragment = document.createDocumentFragment();
+    var newWizardsArray = window.utils.shuffle(wizards);
 
     for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+      fragment.appendChild(renderWizard(newWizardsArray[i]));
     }
 
     similarListElement.appendChild(fragment);
