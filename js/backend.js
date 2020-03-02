@@ -25,7 +25,7 @@
     // загрузка
     xhr.addEventListener('load', function () {
       if (xhr.status === STATUS_OK) {
-        onSuccess(xhr.response)
+        onSuccess(xhr.response);
       } else {
         var error = errorCodes[xhr.response] || 'Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText;
         onError(error);
@@ -44,7 +44,7 @@
     xhr.open(method, url);
 
     return xhr;
-  }
+  };
 
   window.backend = {
     load: function (onLoad, onError) {
