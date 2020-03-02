@@ -49,7 +49,6 @@
   window.backend = {
     load: function (onLoad, onError) {
       var request = createRequest(methods.GET, LOAD_URL, onLoad, onError);
-      console.log(request);
       request.send();
     },
 
