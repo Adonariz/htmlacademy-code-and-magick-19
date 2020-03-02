@@ -13,6 +13,9 @@
   var fireballWrap = player.querySelector('.setup-fireball-wrap');
   var fireball = fireballWrap.querySelector('.setup-fireball');
 
+  var form = document.querySelector('.setup-wizard-form');
+  var submitButton = document.querySelector('.setup-submit');
+
   // отображение попапа
   var onPopupEscPress = function (evt) {
     if (evt.key === window.utils.ESC_KEY) {
@@ -67,5 +70,19 @@
     if (evt.key === window.utils.ENTER_KEY) {
       setupClose();
     }
+  });
+
+  // отправка формы
+  var successHandler = function () {
+    dialogWindow.classList.add('hidden');
+    submitButton.textContent = 'Сохранить';
+    submitButton.disabled = false;
+  };
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), successHandler, window.error);
+    submitButton.textContent = 'Данные отправляются...';
+    submitButton.disabled = true;
   });
 })();

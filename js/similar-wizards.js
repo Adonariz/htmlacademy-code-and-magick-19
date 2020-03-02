@@ -42,7 +42,7 @@
 
   // var generatedWizards = createWizardsArray(window.data.NUMBER_OF_WIZARDS);
 
-  var similarWizardsHandler = function (wizards) {
+  var renderWizards = function (wizards) {
     // создаем фрагмент и добавляем элементы
     var fragment = document.createDocumentFragment();
     var newWizardsArray = window.utils.shuffle(wizards);
@@ -57,18 +57,6 @@
     setupWindow.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  var errorHandler = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
-  window.backend.load(similarWizardsHandler, errorHandler);
+  window.backend.load(renderWizards, window.error);
 
 })();
