@@ -5,12 +5,12 @@
   var setupWindow = document.querySelector('.setup');
 
   // шаблон с похожими волшебниками
-  var similarListElement = document.querySelector('.setup-similar-list');
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+  var wizardList = document.querySelector('.setup-similar-list');
+  var wizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
   // создаем элемент
   var renderWizard = function (wizard) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
+    var wizardElement = wizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
     wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
@@ -19,21 +19,20 @@
     return wizardElement;
   };
 
-  var renderWizards = function (wizards) {
+  window.render = function (data) {
+    var wizardsAmount = data.length > NUMBER_OF_WIZARDS ? NUMBER_OF_WIZARDS : data.length;
+
     // создаем фрагмент и добавляем элементы
     var fragment = document.createDocumentFragment();
-    var newWizardsArray = window.utils.shuffle(wizards);
+    wizardList.innerHTML = '';
 
-    for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
-      fragment.appendChild(renderWizard(newWizardsArray[i]));
+    for (var i = 0; i < wizardsAmount; i++) {
+      fragment.appendChild(renderWizard(data[i]));
     }
 
-    similarListElement.appendChild(fragment);
+    wizardList.appendChild(fragment);
 
     // отрисовываем раздел похожие персонажи
     setupWindow.querySelector('.setup-similar').classList.remove('hidden');
   };
-
-  window.backend.load(renderWizards, window.error);
-
 })();
