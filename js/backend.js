@@ -4,72 +4,57 @@
   var LOAD_URL = 'https://js.dump.academy/code-and-magick/data';
   var SEND_URL = 'https://js.dump.academy/code-and-magick/';
   var TIMEOUT_IN_MS = 10000; // 10 сек
+  var Method = {
+    GET: 'GET',
+    POST: 'POST'
+  };
+  var STATUS_OK = 200;
+  var ErrorCode = {
+    400: 'Неверный запрос',
+    403: 'Доступ запрещен',
+    404: 'Ничего не найдено',
+    500: 'Ошибка сервера',
+    502: 'Неверный ответ сервера',
+    503: 'Сервер временно недоступен'
+  };
 
-  // обрабатываем ответ сервера
-  var serverStatusHandler = function (xhr, onLoad, onError) {
+  // создаем запрос
+  var createRequest = function (method, url, onSuccess, onError) {
+    var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     // загрузка
     xhr.addEventListener('load', function () {
-      var error;
-      switch (xhr.status) {
-        case 200:
-          onLoad(xhr.response);
-          break;
-        case 400:
-          error = 'Неверный запрос';
-          break;
-        case 403:
-          error = 'Доступ запрещен';
-          break;
-        case 404:
-          error = 'Ничего не найдено';
-          break;
-        case 500:
-          error = 'Ошибка сервера';
-          break;
-        case 502:
-          error = 'Неверный ответ сервера';
-          break;
-        case 503:
-          error = 'Сервер временно недоступен';
-          break;
-        default:
-          error = 'Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText;
-      }
-
-      if (error) {
+      if (xhr.status === STATUS_OK) {
+        onSuccess(xhr.response);
+      } else {
+        var error = ErrorCode[xhr.status] || 'Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText;
         onError(error);
       }
-      // ошибка запроса
-      xhr.addEventListener('error', function () {
-        onError('Произошла ошибка соединения');
-      });
-      // превышение лимита времени
-      xhr.addEventListener('timeout', function () {
-        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-      });
-
-      xhr.timeout = TIMEOUT_IN_MS;
     });
+    // ошибка запроса
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+    // превышение лимита времени
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+
+    xhr.timeout = TIMEOUT_IN_MS;
+    xhr.open(method, url);
+
+    return xhr;
   };
 
   window.backend = {
     load: function (onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-
-      serverStatusHandler(xhr, onLoad, onError);
-
-      xhr.open('GET', LOAD_URL);
-      xhr.send();
+      var request = createRequest(Method.GET, LOAD_URL, onLoad, onError);
+      request.send();
     },
 
     save: function (data, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-
-      serverStatusHandler(xhr, onLoad, onError);
-
-      xhr.open('POST', SEND_URL);
-      xhr.send(data);
+      var request = createRequest(Method.POST, SEND_URL, onLoad, onError);
+      request.send(data);
     }
   };
 })();
