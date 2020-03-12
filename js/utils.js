@@ -11,7 +11,7 @@
   var increaseArrayIndex = function (array) {
     currentArrayIndex++;
 
-    if (currentArrayIndex === array.length) {
+    if (currentArrayIndex >= array.length) {
       currentArrayIndex = 0;
     }
     return currentArrayIndex;
