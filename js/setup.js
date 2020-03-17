@@ -15,6 +15,8 @@
 
   var form = document.querySelector('.setup-wizard-form');
   var submitButton = document.querySelector('.setup-submit');
+  var avatar = window.avatar.input;
+  var onAvatarChange = window.avatar.set;
 
   // отображение попапа
   var onPopupEscPress = function (evt) {
@@ -35,6 +37,7 @@
     dialogWindow.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
     window.dialog.resetDialogCoords();
+    avatar.addEventListener('change', onAvatarChange);
     userName.addEventListener('focusin', onUserNameFocus);
     userName.addEventListener('focusout', onUserNameBlur);
     eyes.addEventListener('click', window.playerSetup.onEyesClick);
@@ -45,6 +48,7 @@
   var setupClose = function () {
     dialogWindow.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
+    avatar.removeEventListener('change', onAvatarChange);
     userName.removeEventListener('focusin', onUserNameFocus);
     userName.removeEventListener('focusout', onUserNameBlur);
     eyes.removeEventListener('click', window.playerSetup.onEyesClick);
